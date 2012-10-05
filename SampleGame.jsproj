@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{917e2cb9-8013-4922-8551-dedbd5e31e81}</ProjectGuid>
+    <DefaultLanguage>en-US</DefaultLanguage>
+  </PropertyGroup>
+  <Import Condition="Exists('$(MSBuildExtensionsPath32)\$(MSBuildToolsVersion)\Microsoft.Common.props')" Project="$(MSBuildExtensionsPath32)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).Default.props" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" Label="Configuration">
+  </PropertyGroup>
+  <ItemGroup>
+    <AppxManifest Include="package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <Content Include="css\creditsPage.css" />
+    <Content Include="css\default.css" />
+    <Content Include="css\gamePage.css" />
+    <Content Include="css\homePage.css" />
+    <Content Include="css\rulesPage.css" />
+    <Content Include="css\scoresPage.css" />
+    <Content Include="default.html" />
+    <Content Include="html\creditsPage.html" />
+    <Content Include="html\gamePage.html" />
+    <Content Include="html\homePage.html" />
+    <Content Include="html\rulesPage.html" />
+    <Content Include="html\scoresPage.html" />
+    <Content Include="html\settingsFlyout.html" />
+    <Content Include="images\menuentry.png" />
+    <Content Include="images\menulogo.png" />
+    <Content Include="images\smallTile-sdk.png" />
+    <Content Include="images\splash-sdk.png" />
+    <Content Include="images\squareTile-sdk.png" />
+    <Content Include="images\storeLogo-sdk.png" />
+    <None Include="js\scoresPage.ts" />
+    <None Include="js\rulesPage.ts" />
+    <None Include="js\homePage.ts" />
+    <None Include="js\gamePage.ts" />
+    <None Include="js\game.ts" />
+    <None Include="js\assetManager.ts" />
+    <None Include="js\creditsPage.ts" />
+    <Content Include="sounds\bounce.wav" />
+    <Content Include="js\assetManager.js">
+      <DependentUpon>assetManager.ts</DependentUpon>
+    </Content>
+    <Content Include="js\creditsPage.js">
+      <DependentUpon>creditsPage.ts</DependentUpon>
+    </Content>
+    <Content Include="js\game.js">
+      <DependentUpon>game.ts</DependentUpon>
+    </Content>
+    <Content Include="js\gamePage.js">
+      <DependentUpon>gamePage.ts</DependentUpon>
+    </Content>
+    <Content Include="js\rulesPage.js">
+      <DependentUpon>rulesPage.ts</DependentUpon>
+    </Content>
+    <Content Include="js\scoresPage.js">
+      <DependentUpon>scoresPage.ts</DependentUpon>
+    </Content>
+    <Content Include="js\homePage.js">
+      <DependentUpon>homePage.ts</DependentUpon>
+    </Content>
+    <Content Include="js\frameTimer.js">
+      <DependentUpon>frameTimer.ts</DependentUpon>
+    </Content>
+    <None Include="js\frameTimer.ts" />
+    <Content Include="js\gameState.js">
+      <DependentUpon>gameState.ts</DependentUpon>
+    </Content>
+    <None Include="js\gameState.ts" />
+    <Content Include="js\movingAverage.js">
+      <DependentUpon>movingAverage.ts</DependentUpon>
+    </Content>
+    <None Include="js\movingAverage.ts" />
+    <Content Include="js\navigator.js">
+      <DependentUpon>navigator.ts</DependentUpon>
+    </Content>
+    <None Include="js\navigator.ts" />
+    <Content Include="js\scores.js">
+      <DependentUpon>scores.ts</DependentUpon>
+    </Content>
+    <None Include="js\scores.ts" />
+    <Content Include="js\touchPanel.js">
+      <DependentUpon>touchPanel.ts</DependentUpon>
+    </Content>
+    <None Include="js\touchPanel.ts" />
+    <Content Include="js\default.js">
+      <DependentUpon>default.ts</DependentUpon>
+    </Content>
+    <None Include="js\default.ts" />
+    <None Include="js\win.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Microsoft.WinJS.1.0, Version=1.0" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
+  <ItemGroup>
+    <AvailableItemName Include="TypeScriptCompile" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="$(ProjectDir)\**\*.ts" />
+  </ItemGroup>
+  <Target Name="BeforeBuild">
+    <Exec Command="&quot;$(PROGRAMFILES)\Microsoft SDKs\TypeScript\0.8.0.0\tsc&quot; -target ES5 @(TypeScriptCompile ->'&quot;%(fullpath)&quot;', ' ')" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
