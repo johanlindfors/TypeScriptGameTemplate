@@ -51,6 +51,7 @@
     <None Include="js\game.ts" />
     <None Include="js\assetManager.ts" />
     <None Include="js\creditsPage.ts" />
+    <Content Include="README.md" />
     <Content Include="sounds\bounce.wav" />
     <Content Include="js\assetManager.js">
       <DependentUpon>assetManager.ts</DependentUpon>
