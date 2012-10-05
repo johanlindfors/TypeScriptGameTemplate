@@ -23,7 +23,7 @@ var gamePage;
         });
     }
     function unload(e) {
-        this.disableAppBarGameButtons();
+        gamePage.disableAppBarGameButtons();
         if(GameManager.gameId !== null) {
             stopGameLoop();
         }
@@ -54,7 +54,7 @@ var gamePage;
     }
     function renderLoop() {
         var gameCanvas = document.getElementById("gameCanvas");
-        if(typeof gameCanvas !== null) {
+        if(gameCanvas != null) {
             GameManager.game.draw();
             window.requestAnimationFrame(renderLoop);
         }
@@ -62,7 +62,7 @@ var gamePage;
     gamePage.renderLoop = renderLoop;
     function updateLoop() {
         var gameCanvas = document.getElementById("gameCanvas");
-        if(typeof gameCanvas !== null) {
+        if(gameCanvas != null) {
             GameManager.game.update();
         }
     }

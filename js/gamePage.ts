@@ -44,7 +44,7 @@ module gamePage {
     }
 
     function unload(e) {
-        this.disableAppBarGameButtons();
+        gamePage.disableAppBarGameButtons();
 
         // Stop previous loop if it is running
         if (GameManager.gameId !== null) {
@@ -90,7 +90,7 @@ module gamePage {
 
     export function renderLoop() {
         var gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
-        if (typeof gameCanvas !== null) {
+        if (gameCanvas != null) {
             GameManager.game.draw();
             window.requestAnimationFrame(renderLoop);
         }
@@ -98,7 +98,7 @@ module gamePage {
 
     export function updateLoop() {
         var gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
-        if (typeof gameCanvas !== null) {
+        if (gameCanvas != null) {
             GameManager.game.update();
         }
     }
