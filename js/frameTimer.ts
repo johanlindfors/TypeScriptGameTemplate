@@ -27,7 +27,9 @@ class FrameTimer {
         if (tickHandler) {
             this.tickHandler = tickHandler;
             var myself = this;
-            this.timerId = setTimeout(function () { myself.tick.apply(myself); }, Math.max(0, (1000 / this.fps)));
+            this.timerId = setTimeout(() => { 
+                myself.tick.apply(myself); 
+            }, Math.max(0, (1000 / this.fps)));
         } else {
             this.tickHandler = null;
         }
@@ -50,9 +52,9 @@ class FrameTimer {
             myself.tickHandler();
 
             if (myself.fps > 0) {
-                myself.timerId = setTimeout(function () { myself.tick.apply(myself); }, Math.max(0, (1000 / myself.fps) - myself.frameTimes.average()));
+                myself.timerId = setTimeout(() => { myself.tick.apply(myself); }, Math.max(0, (1000 / myself.fps) - myself.frameTimes.average()));
             } else {
-                myself.timerId = setTimeout(function () { myself.tick.apply(myself); }, 0 );
+                myself.timerId = setTimeout(() => { myself.tick.apply(myself); }, 0 );
             }
         }
     }

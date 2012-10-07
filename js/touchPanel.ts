@@ -1,4 +1,5 @@
-﻿///<referece path='win.ts'/>
+﻿///<reference path='win.ts'/>
+///<reference path='game.ts'/>
 
 class TouchPanel {
     public boundCanvas = null;

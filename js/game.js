@@ -4,7 +4,6 @@ var Game = (function () {
         this.stateHelper = null;
         this.state = null;
         this.settings = null;
-        this.gameCanvas = null;
     }
     Game.prototype.isSnapped = function () {
         var currentState = Windows.UI.ViewManagement.ApplicationView.value;
@@ -32,8 +31,8 @@ var Game = (function () {
         if(this.state.gamePhase === "started") {
             this.pause();
         }
-        var gameCanvas = document.getElementById("gameCanvas");
-        this.gameContext = gameCanvas.getContext("2d");
+        this.gameCanvas = document.getElementById("gameCanvas");
+        this.gameContext = this.gameCanvas.getContext("2d");
     };
     Game.prototype.show = function () {
     };
@@ -42,9 +41,8 @@ var Game = (function () {
     };
     Game.prototype.snap = function () {
         this.pause();
-        var gameCanvas = document.getElementById("gameCanvas");
-        gameCanvas.width = window.innerWidth;
-        gameCanvas.height = window.innerHeight;
+        this.gameCanvas.width = window.innerWidth;
+        this.gameCanvas.height = window.innerHeight;
     };
     Game.prototype.unsnap = function () {
         if(this.state.position.x > window.innerWidth) {
@@ -53,9 +51,8 @@ var Game = (function () {
         if(this.state.position.y > window.innerHeight) {
             this.state.position.y += window.innerHeight - this.state.position.y;
         }
-        var gameCanvas = document.getElementById("gameCanvas");
-        gameCanvas.width = window.innerWidth;
-        gameCanvas.height = window.innerHeight;
+        this.gameCanvas.width = window.innerWidth;
+        this.gameCanvas.height = window.innerHeight;
         this.unpause();
     };
     Game.prototype.newGame = function () {
@@ -193,13 +190,12 @@ var Game = (function () {
     };
     Game.prototype.update = function () {
         if(!this.state.gamePaused && this.state.gamePhase === "started") {
-            var gameCanvas = document.getElementById("gameCanvas");
-            if(this.state.position.x < 0 || this.state.position.x > gameCanvas.width) {
+            if(this.state.position.x < 0 || this.state.position.x > this.gameCanvas.width) {
                 this.state.speed.x = -this.state.speed.x;
                 this.state.bounce++;
                 GameManager.assetManager.playSound(GameManager.assetManager.assets.sndBounce);
             }
-            if(this.state.position.y < 0 || this.state.position.y > gameCanvas.height) {
+            if(this.state.position.y < 0 || this.state.position.y > this.gameCanvas.height) {
                 this.state.speed.y = -this.state.speed.y;
                 this.state.bounce++;
                 GameManager.assetManager.playSound(GameManager.assetManager.assets.sndBounce);
@@ -212,8 +208,7 @@ var Game = (function () {
         }
     };
     Game.prototype.draw = function () {
-        var gameCanvas = document.getElementById("gameCanvas");
-        this.gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+        this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
         this.gameContext.beginPath();
         this.gameContext.fillStyle = "#FFFFFF";
         this.gameContext.arc(this.state.position.x, this.state.position.y, 20, 0, Math.PI * 2, true);
@@ -223,18 +218,18 @@ var Game = (function () {
         this.gameContext.font = "bold 48px Segoe UI";
         this.gameContext.textBaseline = "middle";
         this.gameContext.textAlign = "right";
-        this.gameContext.fillText(this.state.score, gameCanvas.width - 5, 20);
+        this.gameContext.fillText(this.state.score, this.gameCanvas.width - 5, 20);
         if(this.state.gamePhase === "ready") {
             this.gameContext.textAlign = "center";
-            this.gameContext.fillText("READY", gameCanvas.width / 2, gameCanvas.height / 2);
+            this.gameContext.fillText("READY", this.gameCanvas.width / 2, this.gameCanvas.height / 2);
         } else {
             if(this.state.gamePhase === "ended") {
                 this.gameContext.textAlign = "center";
-                this.gameContext.fillText("GAME OVER", gameCanvas.width / 2, gameCanvas.height / 2);
+                this.gameContext.fillText("GAME OVER", this.gameCanvas.width / 2, this.gameCanvas.height / 2);
             } else {
                 if(this.state.gamePaused) {
                     this.gameContext.textAlign = "center";
-                    this.gameContext.fillText("PAUSED", gameCanvas.width / 2, gameCanvas.height / 2);
+                    this.gameContext.fillText("PAUSED", this.gameCanvas.width / 2, this.gameCanvas.height / 2);
                 }
             }
         }

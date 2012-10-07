@@ -7,7 +7,7 @@ class Game {
     public stateHelper : GameState = null;
     public state = null;
     public settings = null;
-    private gameCanvas : HTMLCanvasElement = null;
+    private gameCanvas: HTMLCanvasElement;
   
     isSnapped(): bool { 
         var currentState = Windows.UI.ViewManagement.ApplicationView.value;
@@ -34,7 +34,7 @@ class Game {
         return assets;
     }
 
-        // Called the first time the game is shown
+    // Called the first time the game is shown
     showFirst() {
         // If game was previously running, pause it.
         if (this.state.gamePhase === "started") {
@@ -42,8 +42,8 @@ class Game {
         }
 
         // Note: gameCanvas is the name of the <canvas> in default.html
-        var gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
-        this.gameContext = gameCanvas.getContext("2d");
+        this.gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
+        this.gameContext = this.gameCanvas.getContext("2d");
     }
 
     // Called each time the game is shown
@@ -60,10 +60,9 @@ class Game {
     snap() {
         // TODO: Update game state when in snapped view - basic UI styles can be set with media queries in gamePage.css
         this.pause();
-        // Temporarily resize game area to maintain aspect ratio
-        var gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
-        gameCanvas.width = window.innerWidth;
-        gameCanvas.height = window.innerHeight;
+        // Temporarily resize game area to maintain aspect ratio        
+        this.gameCanvas.width = window.innerWidth;
+        this.gameCanvas.height = window.innerHeight;
     }
 
         // Called when the game enters fill or full-screen view
@@ -79,9 +78,8 @@ class Game {
         }
 
         // Restore game area to new aspect ratio
-        var gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
-        gameCanvas.width = window.innerWidth;
-        gameCanvas.height = window.innerHeight;
+        this.gameCanvas.width = window.innerWidth;
+        this.gameCanvas.height = window.innerHeight;
 
         // Resume playing
         this.unpause();
@@ -265,16 +263,15 @@ class Game {
     update() {
         // TODO: Sample game logic to be replaced
         if (!this.state.gamePaused && this.state.gamePhase === "started") {
-            var gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
-
-            if (this.state.position.x < 0 || this.state.position.x > gameCanvas.width) {
+            
+            if (this.state.position.x < 0 || this.state.position.x > this.gameCanvas.width) {
                 this.state.speed.x = -this.state.speed.x;
                 this.state.bounce++;
 
                 // Play bounce sound
                 GameManager.assetManager.playSound(GameManager.assetManager.assets.sndBounce);
             }
-            if (this.state.position.y < 0 || this.state.position.y > gameCanvas.height) {
+            if (this.state.position.y < 0 || this.state.position.y > this.gameCanvas.height) {
                 this.state.speed.y = -this.state.speed.y;
                 this.state.bounce++;
 
@@ -293,8 +290,7 @@ class Game {
 
     // Main game render loop
     draw() {
-        var gameCanvas = <HTMLCanvasElement>document.getElementById("gameCanvas");
-        this.gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+        this.gameContext.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
 
         // TODO: Sample game rendering to be replaced
 
@@ -310,18 +306,18 @@ class Game {
         this.gameContext.font = "bold 48px Segoe UI";
         this.gameContext.textBaseline = "middle";
         this.gameContext.textAlign = "right";
-        this.gameContext.fillText(this.state.score, gameCanvas.width - 5, 20);
+        this.gameContext.fillText(this.state.score, this.gameCanvas.width - 5, 20);
 
         // Draw a ready or game over or paused indicator
         if (this.state.gamePhase === "ready") {
             this.gameContext.textAlign = "center";
-            this.gameContext.fillText("READY", gameCanvas.width / 2, gameCanvas.height / 2);
+            this.gameContext.fillText("READY", this.gameCanvas.width / 2, this.gameCanvas.height / 2);
         } else if (this.state.gamePhase === "ended") {
             this.gameContext.textAlign = "center";
-            this.gameContext.fillText("GAME OVER", gameCanvas.width / 2, gameCanvas.height / 2);
+            this.gameContext.fillText("GAME OVER", this.gameCanvas.width / 2, this.gameCanvas.height / 2);
         } else if (this.state.gamePaused) {
             this.gameContext.textAlign = "center";
-            this.gameContext.fillText("PAUSED", gameCanvas.width / 2, gameCanvas.height / 2);
+            this.gameContext.fillText("PAUSED", this.gameCanvas.width / 2, this.gameCanvas.height / 2);
         }
 
         // Draw the number of bounces remaining
